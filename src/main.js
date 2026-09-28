@@ -27,7 +27,7 @@ async function boot() {
 
     status.textContent = '正在获取展厅清单…';
     bar.style.width = '20%';
-    const res = await fetch('/data/manifest.json');
+    const res = await fetch('./data/manifest.json');
     if (!res.ok) throw new Error(`展厅清单加载失败 (${res.status})`);
     const manifest = await res.json();
 

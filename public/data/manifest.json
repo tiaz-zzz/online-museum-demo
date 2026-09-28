@@ -21,7 +21,7 @@
       "version": 1,
       "splat": {
         "format": "splat",
-        "url": "/assets/scenes/train.splat",
+        "url": "assets/scenes/train.splat",
         "sizeMB": 31.3,
         "chunks": 0
       },
@@ -260,7 +260,7 @@
       "version": 1,
       "splat": {
         "format": "spz",
-        "url": "/assets/scenes/painted_bedroom.spz",
+        "url": "assets/scenes/painted_bedroom.spz",
         "sizeMB": 7.5,
         "chunks": 0
       },
@@ -422,7 +422,7 @@
       "version": 1,
       "splat": {
         "format": "splat",
-        "url": "/assets/scenes/truck.splat",
+        "url": "assets/scenes/truck.splat",
         "sizeMB": 77.6,
         "chunks": 0
       },
@@ -641,7 +641,7 @@
       "version": 1,
       "splat": {
         "format": "ply",
-        "url": "/assets/scenes/hunyuan.ply",
+        "url": "assets/scenes/hunyuan.ply",
         "sizeMB": 28.2,
         "chunks": 0
       },
