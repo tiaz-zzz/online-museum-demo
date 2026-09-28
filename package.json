@@ -1,0 +1,20 @@
+{
+  "name": "online-museum-3dgs-demo",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "在线博物馆 · 3DGS 高斯泼溅步入式漫游 Demo（three.js + Spark，参照《在线博物馆-高斯泼溅技术选型与系统架构》M0/M1 里程碑）",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "analyze": "node tools/analyze-splat.mjs"
+  },
+  "dependencies": {
+    "@sparkjsdev/spark": "^2.2.0",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "vite": "^7.1.9"
+  }
+}

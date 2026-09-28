@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <title>云游博物馆 · 3DGS 高斯泼溅步入式漫游 Demo</title>
+
+  <!-- ====== SEO / 分享卡片（参照文档 F9 / §5.4：SSR 头部在本 Demo 以静态形式呈现） ====== -->
+  <meta name="description" content="基于三维高斯泼溅（3D Gaussian Splatting）的在线博物馆步入式漫游演示：第一人称自由行走、展品热点讲解、多展厅切换、导览巡游。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="云游博物馆 · 3DGS 步入式漫游 Demo" />
+  <meta property="og:description" content="在照片级真实感的高斯泼溅展厅中自由漫步：WASD 行走、鼠标环顾、热点讲解、多厅漫游。" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Museum",
+    "name": "云游博物馆（3DGS Demo）",
+    "description": "基于三维高斯泼溅的在线步入式博物馆演示",
+    "isAccessibleForFree": true
+  }
+  </script>
+
+  <style>
+    /* ====== 直出 Splash（文档 §8.1：HTML 内联绘制，不依赖任何 JS，首帧可见） ====== */
+    html, body { margin: 0; padding: 0; height: 100%; background: #0b0d11; }
+    #splash {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background:
+        radial-gradient(1200px 600px at 50% -10%, rgba(201,168,106,.14), transparent 60%),
+        radial-gradient(900px 500px at 80% 110%, rgba(60,90,140,.10), transparent 60%),
+        #0b0d11;
+      color: #e8e2d5; font-family: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+      transition: opacity .45s ease; user-select: none;
+    }
+    #splash.gone { opacity: 0; pointer-events: none; }
+    #splash .seal {
+      width: 72px; height: 72px; border: 2px solid #c9a86a; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px; color: #c9a86a; margin-bottom: 22px;
+      box-shadow: 0 0 40px rgba(201,168,106,.25) inset, 0 0 24px rgba(201,168,106,.12);
+    }
+    #splash h1 { font-size: 26px; font-weight: 600; letter-spacing: .35em; margin: 0 0 6px; text-indent: .35em; }
+    #splash p  { font-size: 13px; letter-spacing: .2em; color: #9a927f; margin: 0 0 34px; }
+    #splash .bar { width: min(320px, 70vw); height: 2px; background: rgba(232,226,213,.12); border-radius: 2px; overflow: hidden; }
+    #splash .bar i { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, #8f6c33, #c9a86a); transition: width .3s ease; }
+    #splash .status { margin-top: 14px; font-size: 12px; color: #7d766a; letter-spacing: .1em; min-height: 18px; }
+  </style>
+</head>
+<body>
+  <div id="splash">
+    <div class="seal">馆</div>
+    <h1>云游博物馆</h1>
+    <p>三维高斯泼溅 · 步入式漫游 DEMO</p>
+    <div class="bar"><i id="splash-bar"></i></div>
+    <div class="status" id="splash-status">正在启动引擎…</div>
+    <noscript>
+      <!-- 无 JS 降级图文页（文档 F9：可被搜索引擎收录的降级内容，兼顾无障碍） -->
+      <div style="max-width:560px;margin-top:30px;font-size:14px;line-height:1.8;color:#b7b0a2;">
+        <p>您的浏览器未启用 JavaScript，无法进入 3D 漫游。</p>
+        <p>本馆现有展厅：<b>铁道文物厅（老式客车车厢）</b>、<b>复原陈列厅（民居卧室）</b>、<b>露天展区（馆藏老爷车）</b>。
+        启用 JavaScript 后，您可以第一人称视角在照片级真实感的展厅中自由漫步，并查看展品讲解。</p>
+      </div>
+    </noscript>
+  </div>
+
+  <canvas id="stage"></canvas>
+  <div id="app"></div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
