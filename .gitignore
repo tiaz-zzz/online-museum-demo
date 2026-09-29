@@ -1,2 +1,5 @@
 node_modules/
 dist/
+
+# ZCode 内部工作区（会话计划等工具状态，不入库）
+.zcode/

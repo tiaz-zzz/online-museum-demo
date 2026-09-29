@@ -13,6 +13,15 @@ npm run dev        # http://localhost:5173
 
 要求：Node ≥ 20、WebGL2 浏览器（近两年 Chrome/Edge/Firefox/Safari）。首次进入每个展厅需下载对应泼溅资产（31~78MB，本地静态文件）。
 
+## 在线体验（GitHub Pages）
+
+已配置 GitHub Actions 自动部署到 GitHub Pages（`vite build` → 上传产物），提交到 `main` 即自动发布：
+
+- 博物馆主入口：`https://tiaz-zzz.github.io/online-museum-demo/`
+- 具身导航框架雏形入口：`https://tiaz-zzz.github.io/online-museum-demo/nav.html`
+
+站点托管在项目子路径 `/online-museum-demo/` 下，因此构建配置 `base` 并统一采用**相对路径**引用 `public/data/manifest.json` 与其内的泼溅资产（`assets/scenes/…`），保证本地 dev 与 Pages 行为一致。线上首屏加载含泼溅下载（单厅约 7.5~78MB），略慢属正常。
+
 ## 操作
 
 | 桌面 | 移动端 |
@@ -105,6 +114,13 @@ npm run dev
 
 ---
 
+## 论文整理文档（docs）
+
+- `高斯泼溅场景具身导航论文整理.md` —— 3DGS 场景具身导航（Splat-Nav / GaussNav / ActiveSplat / LangSplat 等）论文要点梳理；`src/nav/` 雏形即按其中"从高斯解析自由空间"路线（①）落地。
+- `VLN具身导航论文整理.md` —— Vision-Language Navigation（视觉-语言导航）论文整理，作为后续语义地图与语言接地（路线②④）的输入。
+
+---
+
 ## 展厅与资产来源
 
 | 展厅 | 资产 | 来源 | 体积 |
@@ -153,6 +169,8 @@ Spark 原生支持 **3DGS 格式的 `.ply`**（含 `scale/rot/opacity/f_dc/f_res
 ## 目录结构
 
 ```
+├─ VLN具身导航论文整理.md        # 视觉-语言导航（VLN）论文整理
+├─ 高斯泼溅场景具身导航论文整理.md # 3DGS 具身导航论文整理（src/nav 雏形依据）
 ├─ index.html                  # 直出 Splash + SEO/JSON-LD + 无 JS 降级
 ├─ nav.html                    # 具身导航框架雏形入口（?file= 任意格式直连）
 ├─ public/
