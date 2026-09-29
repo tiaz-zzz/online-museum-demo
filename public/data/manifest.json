@@ -14,6 +14,38 @@
   },
   "scenes": [
     {
+      "sceneId": 1005,
+      "name": "临展厅 · 用户采集展厅",
+      "short": "临展厅",
+      "description": "由用户提供的 3DGS PLY 实景采集场景（大理石地面 + 玻璃展柜门厅），本条目标定值由具身导航雏形（nav.html）自动推断并人工确认。",
+      "version": 1,
+      "splat": {
+        "format": "ply",
+        "url": "assets/scenes/user-scene.ply",
+        "sizeMB": 33.7,
+        "chunks": 0
+      },
+      "up": "+z",
+      "scale": 0.65,
+      "floorY": -1.63,
+      "eyeHeightM": 1.55,
+      "spawn": {
+        "pos": [-1.61, 0.16, -1.66],
+        "yaw": -67
+      },
+      "bounds": {
+        "min": [-19.4, -7.2],
+        "max": [15.4, 7]
+      },
+      "walls": [],
+      "neighbors": [],
+      "hotspots": [],
+      "minimap": {
+        "flipX": false,
+        "flipZ": false
+      }
+    },
+    {
       "sceneId": 1001,
       "name": "铁道藏品区 · 西部太平洋713号机车",
       "short": "铁道藏品区",

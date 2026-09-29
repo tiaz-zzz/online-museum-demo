@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <title>3DGS 具身导航雏形 · 多格式场景步入式漫游</title>
+  <meta name="description" content="三维高斯泼溅具身导航框架雏形：适配 .ply/.splat/.ksplat/.spz/.sog/.rad 常见格式，自动推断可行走区域，方向键/鼠标步入式漫游。" />
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; background: #0b0d11; overflow: hidden; }
+    #stage { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+  </style>
+</head>
+<body>
+  <canvas id="stage"></canvas>
+  <div id="nav-ui" class="nv-ui"></div>
+  <script type="module" src="/src/nav/main.js"></script>
+</body>
+</html>

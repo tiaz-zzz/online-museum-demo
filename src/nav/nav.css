@@ -1,0 +1,238 @@
+/* ===== 导航雏形 HUD 样式（与博物馆 demo 同一视觉语言：暗底 + 金色点缀） ===== */
+
+.nv-ui, .nv-ui * { box-sizing: border-box; }
+
+/* hidden 属性必须赢过本文件里所有 display 规则（覆层/幕布/map 都依赖 hidden 切换） */
+.nv-ui [hidden] { display: none !important; }
+
+/* H 隐藏 UI 覆盖层：只藏常驻 chrome，帮助/校准面板仍可打开 */
+.nv-ui.nv-chrome-off .nv-topbar,
+.nv-ui.nv-chrome-off .nv-cross,
+.nv-ui.nv-chrome-off .nv-hint,
+.nv-ui.nv-chrome-off .nv-map,
+.nv-ui.nv-chrome-off .nv-toast { display: none !important; }
+
+.nv-ui {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  color: #e8e2d5;
+  z-index: 10;
+  user-select: none;
+}
+
+/* 准星 */
+.nv-cross {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 14px; height: 14px;
+  transform: translate(-50%, -50%);
+  opacity: .75;
+}
+.nv-cross::before, .nv-cross::after {
+  content: "";
+  position: absolute;
+  background: rgba(232, 226, 213, .85);
+}
+.nv-cross::before { left: 50%; top: 0; width: 1.5px; height: 100%; transform: translateX(-50%); }
+.nv-cross::after { top: 50%; left: 0; height: 1.5px; width: 100%; transform: translateY(-50%); }
+
+/* 顶栏 */
+.nv-topbar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: linear-gradient(rgba(8, 10, 14, .72), transparent);
+  font-size: 12px;
+  letter-spacing: .04em;
+}
+.nv-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.nv-title { color: #c9a86a; font-weight: 600; white-space: nowrap; }
+.nv-scene { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 34vw; }
+.nv-badge {
+  border: 1px solid rgba(201, 168, 106, .55);
+  color: #c9a86a;
+  border-radius: 4px;
+  padding: 1px 7px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.nv-right { display: flex; align-items: center; gap: 8px; }
+.nv-chip {
+  background: rgba(20, 24, 32, .72);
+  border: 1px solid rgba(232, 226, 213, .14);
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 11px;
+  min-width: 64px;
+  text-align: center;
+}
+.nv-dim { color: #8b8577; font-size: 11px; }
+
+/* 可行走区小地图 */
+.nv-map {
+  position: absolute;
+  top: 46px; right: 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(232, 226, 213, .16);
+  pointer-events: auto; /* UI 悬停守卫需要接收 pointerenter/leave */
+}
+
+/* 底部提示 */
+.nv-hint {
+  position: absolute;
+  bottom: 14px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #b7b0a2;
+  background: rgba(10, 12, 16, .62);
+  border-radius: 20px;
+  padding: 6px 16px;
+  white-space: nowrap;
+  transition: opacity .4s;
+}
+.nv-hint b { color: #c9a86a; }
+
+/* 暂停幕 */
+.nv-veil {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 10, 14, .45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nv-veil-card { text-align: center; }
+.nv-veil-t { font-size: 20px; letter-spacing: .3em; text-indent: .3em; margin-bottom: 8px; }
+.nv-veil-d { font-size: 12px; color: #9a927f; }
+
+/* 帮助 / 校准覆层 */
+.nv-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 10, 14, .6);
+  pointer-events: auto;
+}
+.nv-card {
+  background: rgba(16, 19, 25, .96);
+  border: 1px solid rgba(201, 168, 106, .35);
+  border-radius: 12px;
+  padding: 18px 22px;
+  max-width: min(480px, 92vw);
+  max-height: 86vh;
+  overflow: auto;
+  box-shadow: 0 12px 60px rgba(0, 0, 0, .5);
+}
+.nv-card-h {
+  font-size: 14px;
+  color: #c9a86a;
+  letter-spacing: .15em;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nv-x {
+  background: none; border: none; color: #8b8577;
+  font-size: 13px; cursor: pointer; padding: 2px 6px;
+}
+.nv-x:hover { color: #e8e2d5; }
+.nv-kv { border-collapse: collapse; font-size: 12px; width: 100%; }
+.nv-kv td { padding: 5px 8px; border-bottom: 1px solid rgba(232, 226, 213, .08); }
+.nv-kv td:first-child { color: #c9a86a; white-space: nowrap; width: 8.5em; }
+.nv-foot { margin-top: 12px; font-size: 11px; color: #8b8577; line-height: 1.7; }
+
+/* 校准面板 */
+.nv-calib { max-width: min(560px, 94vw); }
+.nv-grid {
+  display: grid;
+  grid-template-columns: 8.5em 1fr;
+  gap: 4px 10px;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+.nv-grid .nv-k { color: #8b8577; }
+.nv-grid .nv-v { word-break: break-all; }
+.nv-btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.nv-btns button {
+  background: rgba(201, 168, 106, .12);
+  border: 1px solid rgba(201, 168, 106, .45);
+  color: #d9c9a3;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.nv-btns button:hover { background: rgba(201, 168, 106, .25); }
+.nv-calib textarea {
+  width: 100%;
+  background: #0b0d11;
+  color: #b7e0b0;
+  border: 1px solid rgba(232, 226, 213, .16);
+  border-radius: 6px;
+  font: 11px/1.5 ui-monospace, Consolas, monospace;
+  padding: 8px;
+  resize: vertical;
+}
+
+/* toast */
+.nv-toast {
+  position: absolute;
+  bottom: 58px; left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: rgba(20, 24, 32, .92);
+  border: 1px solid rgba(201, 168, 106, .4);
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 13px;
+  opacity: 0;
+  transition: opacity .3s, transform .3s;
+  max-width: 80vw;
+}
+.nv-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* 启动 splash */
+.nv-splash {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #0b0d11;
+  pointer-events: auto;
+  transition: opacity .5s;
+  z-index: 20;
+}
+.nv-splash.gone { opacity: 0; pointer-events: none; }
+.nv-splash.nv-error .nv-splash-s { color: #d46a5f; line-height: 1.9; }
+.nv-splash-seal {
+  width: 64px; height: 64px;
+  border: 2px solid #c9a86a;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 34px; color: #c9a86a;
+  margin-bottom: 18px;
+  box-shadow: 0 0 34px rgba(201, 168, 106, .22) inset;
+}
+.nv-splash-t { font-size: 20px; letter-spacing: .3em; text-indent: .3em; margin-bottom: 8px; }
+.nv-splash-d { font-size: 12px; color: #8b8577; letter-spacing: .12em; margin-bottom: 30px; }
+.nv-bar {
+  width: min(300px, 70vw); height: 2px;
+  background: rgba(232, 226, 213, .12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.nv-bar i {
+  display: block; height: 100%; width: 0%;
+  background: linear-gradient(90deg, #8f6c33, #c9a86a);
+  transition: width .25s ease;
+}
+.nv-splash-s { margin-top: 14px; font-size: 12px; color: #7d766a; letter-spacing: .08em; text-align: center; max-width: 84vw; }
