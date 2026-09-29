@@ -16,22 +16,16 @@ import { NavApp } from './app.js';
  *   ?debug=1                   状态条常显标定 JSON
  */
 
-/** 无 URL 参数时的默认场景（用户提供的展厅 PLY）+ 视觉校准的标定覆盖 */
-const DEFAULT_SCENE = {
-  file: 'assets/scenes/user-scene.ply',
-  up: '+z',    // 视觉校准确认：+z 才是正立方向。-y 的可走面积指标更大但把墙面当了地面
-  scale: 0.65, // 自动推断(0.43，按层高3.2m假设)偏大 → 相机悬空；视觉校准取 0.65（人物贴地）
-};
+/** 无 URL 参数时的默认场景：混元展厅（纯自动标定路径，实测最稳） */
+const DEFAULT_SCENE = { file: 'assets/scenes/hunyuan.ply' };
 
 /** URL 调试参数 */
 const params = Object.fromEntries(new URLSearchParams(location.search));
 
-// 无任何场景参数 → 默认加载 DEFAULT_SCENE 并应用其标定覆盖
-// （必须在 NavApp 构造前写入：构造函数会把 params 快照进 _overrides）
+// 无任何场景参数 → 默认加载 DEFAULT_SCENE（必须在 NavApp 构造前写入：
+// 构造函数会把 params 快照进 _overrides）
 if (!params.file && !params.url && !params.scene) {
   params.file = DEFAULT_SCENE.file;
-  if (params.scale == null) params.scale = DEFAULT_SCENE.scale;
-  if (params.up == null) params.up = DEFAULT_SCENE.up;
 }
 
 async function boot() {

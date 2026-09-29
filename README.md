@@ -40,12 +40,13 @@ URL 调试参数：`?scene=1001&pos=x,y,z&yaw=度&debug=1`（定位/朝向）、
 
 ```bash
 npm run dev
-# http://localhost:5173/online-museum-demo/nav.html                    # 默认场景 = assets/scenes/user-scene.ply（全自动标定）
+# http://localhost:5173/online-museum-demo/nav.html                    # 默认场景 = 混元展厅（hunyuan.ply，全自动标定）
+# http://localhost:5173/online-museum-demo/nav.html?scene=1005         # 用户采集展厅（user-scene.ply）
 # http://localhost:5173/online-museum-demo/nav.html?scene=1002         # manifest 场景
 # http://localhost:5173/online-museum-demo/nav.html?file=任意.ply      # 任意格式直连
 ```
 
-默认场景为 `public/assets/scenes/user-scene.ply`（用户采集的展厅门厅，63.2 万高斯）：无参数打开即按**视觉校准过的标定**（up=+z、scale=0.65m/单位）加载——自动推断的比例尺（0.43，按层高 3.2m 假设）会让相机悬空，故对默认场景显式固定；该场景也已登记为 manifest `sceneId 1005`。
+默认场景为 `public/assets/scenes/hunyuan.ply`（混元生成展厅，52.8 万高斯）：无参数打开即走**纯自动标定**路径（实测自动整平 0.9° 倾角、可行走区 1054 格中轴通道）。用户采集展厅保留为 manifest `sceneId 1005`（`user-scene.ply`，视觉校准 up=+z、scale=0.65）。
 
 ### 场景格式适配（src/nav/core/scene-loader.js）
 

@@ -395,11 +395,23 @@ export class NavApp {
     const a = g.minA + (best[0] + 0.5) * g.cell;
     const b = g.minB + (best[1] + 0.5) * g.cell;
     const pos = fromFrame(this.frame, a, b, this.frame.floorU);
-    // 朝向场景中心
-    const bd = this.frame.bounds2D;
-    const da = (bd.minA + bd.maxA) / 2 - a;
-    const db = (bd.minB + bd.maxB) / 2 - b;
-    const yawDeg = Math.atan2(-da, db) * (180 / Math.PI);
+    // 朝向：四个正交方向中"可走走廊最长"的方向，避免出生即面壁
+    let yawDeg = 0;
+    let bestRun = -1;
+    for (const [dc, dr] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+      let run = 0;
+      let cc = best[0];
+      let rr = best[1];
+      for (;;) {
+        cc += dc;
+        rr += dr;
+        if (cc < 0 || rr < 0 || cc >= g.cols || rr >= g.rows) break;
+        if (g.data[rr * g.cols + cc] !== 1) break;
+        run++;
+        if (run > 300) break;
+      }
+      if (run > bestRun) { bestRun = run; yawDeg = Math.atan2(-dc, dr) * (180 / Math.PI); }
+    }
     return { pos, yawDeg };
   }
 
