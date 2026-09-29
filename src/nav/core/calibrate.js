@@ -321,11 +321,26 @@ export function calibrateScene(samples, opts = {}) {
   const ai = axisIndex(up);
   const axisSign = U.getComponent(ai); // up 轴方向的坐标分量符号
   const { centers, count } = samples;
+  let floorRawAuto = false;
 
   // 地面：detectFloor 返回 p·U 语义；URL/校准给的 floorRaw 是"原始坐标分量"，需换算
   let floorU;
   if (opts.floorRaw != null && Number.isFinite(opts.floorRaw)) floorU = opts.floorRaw * axisSign;
   else floorU = detectFloor(samples, up);
+
+  // hint 地面自愈：标定的地面高度若在数据里几乎没有支撑样本（陈旧/错误标定），
+  // 回退到直方图自动检测，否则可行走网格会因"无地面证据"而构建失败。
+  {
+    let bandN = 0;
+    for (let i = 0; i < count; i++) {
+      const v = centers[i * 3] * U.x + centers[i * 3 + 1] * U.y + centers[i * 3 + 2] * U.z;
+      if (Math.abs(v - floorU) <= 1.0) bandN++; // 1 原始单位粗查（≈0.3~0.6m，随比例尺浮动）
+    }
+    if (bandN < Math.max(400, count * 0.004)) {
+      floorU = detectFloor(samples, up);
+      floorRawAuto = true;
+    }
+  }
 
   // 临时竖直分位与比例尺（定义地板带宽度用；整平后再精化）
   const Vs0 = new Float32Array(count);

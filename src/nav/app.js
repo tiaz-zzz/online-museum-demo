@@ -294,6 +294,12 @@ export class NavApp {
     if (this._spawnOverride) {
       spawnPos = new THREE.Vector3(...this._spawnOverride.pos);
       yawDeg = this._spawnOverride.yaw;
+      // 出生点高度与整平后的地面差 >1.5m（陈旧标定）→ 先贴回地面
+      const uErr = (spawnPos.dot(this.frame.U) - this.frame.floorU) * this.frame.mPerUnit;
+      if (Math.abs(uErr) > 1.5) {
+        spawnPos.addScaledVector(this.frame.U, this.frame.floorU - spawnPos.dot(this.frame.U));
+        spawnNudged = true;
+      }
     } else if (this.grid) {
       const pick = this._pickSpawn();
       spawnPos = pick.pos;
